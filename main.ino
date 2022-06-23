@@ -13,8 +13,8 @@ const int REAR_LEFT_MOTOR_PIN_1 = 3;
 const int REAR_LEFT_MOTOR_PIN_2 = 5;
 
 const int IR_PIN = A4;
-const int TRIGGER_PIN = 11;
-const int ECHO_PIN = 10;
+const int TRIGGER_PIN = 12;
+const int ECHO_PIN = 13;
 
 String command;
 MotorController motorController = MotorController(
