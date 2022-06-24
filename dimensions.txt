@@ -1,0 +1,20 @@
+dimensions:
+
+motor length: 70mm
+motor height: 23mm
+motor width: 19mm
+motor hole: 3mm
+
+motor controller: 43x43mm
+
+distance between front wheels: 28mm
+wheel+tire diameter: 68mm
+wheel+tire width: 26mm
+
+battery length: 69mm
+battery width: 37mm
+battery height: 20mm
+
+breadboard length: 83mm
+breadboard width: 54mm
+breadboard height: 10mm
