@@ -22,6 +22,7 @@ void getCommand() {
     // check if data is available
     if(Serial.available() > 0) {
         command = Serial.readString();
+      	motorController.setPrintFlag();
     }
 }
 
@@ -56,6 +57,4 @@ void setup() {
 void loop() {
     getCommand();
     parseCommand();
-  
-  	motorController.goForward();
 }

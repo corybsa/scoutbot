@@ -19,8 +19,10 @@ private:
     int LEFT_MOTORS_PIN_2;
 
     int motorSpeed = 16;
+  	bool needToPrintStatus = false;
 
     void controlMotor(MotorDirection direction);
+  	void printStatus(String message);
 
 public:
     MotorController(int rightMotorsPin1, int rightMotorsPin2, int leftMotorsPin1, int leftMotorsPin2);
@@ -31,6 +33,7 @@ public:
     void turnLeft();
     void goBakward();
     void stop();
+  	void setPrintFlag();
 };
 
 #endif

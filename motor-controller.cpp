@@ -14,6 +14,17 @@ void MotorController::setup() {
     pinMode(LEFT_MOTORS_PIN_2, OUTPUT);
 }
 
+void MotorController::printStatus(String message) {
+    if(needToPrintStatus) {
+		Serial.println("[ScoutBot] " + message);
+      	needToPrintStatus = false;
+    }
+}
+
+void MotorController::setPrintFlag() {
+    needToPrintStatus = true;
+}
+
 void MotorController::controlMotor(MotorDirection direction) {
     int rightMotorsPin1 = LOW;
     int rightMotorsPin2 = LOW;
@@ -67,20 +78,25 @@ void MotorController::controlMotor(MotorDirection direction) {
 
 void MotorController::goForward() {
     controlMotor(MotorDirection::Forward);
+  	printStatus("Moving forward");
 }
 
 void MotorController::turnRight() {
     controlMotor(MotorDirection::Right);
+  	printStatus("Turning right");
 }
 
 void MotorController::turnLeft() {
     controlMotor(MotorDirection::Left);
+  	printStatus("Turning left");
 }
 
 void MotorController::goBakward() {
     controlMotor(MotorDirection::Backward);
+  	printStatus("Moving backward");
 }
 
 void MotorController::stop() {
     controlMotor(MotorDirection::Stop);
+  	printStatus("Stopped");
 }
