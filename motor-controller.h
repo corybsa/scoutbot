@@ -13,29 +13,17 @@ private:
         Stop
     };
 
-    int REAR_RIGHT_MOTOR_PIN_1;
-    int REAR_RIGHT_MOTOR_PIN_2;
+    int RIGHT_MOTORS_PIN_1;
+    int RIGHT_MOTORS_PIN_2;
+    int LEFT_MOTORS_PIN_1;
+    int LEFT_MOTORS_PIN_2;
 
-    int FRONT_RIGHT_MOTOR_PIN_1;
-    int FRONT_RIGHT_MOTOR_PIN_2;
-
-    int REAR_LEFT_MOTOR_PIN_1;
-    int REAR_LEFT_MOTOR_PIN_2;
-
-    int FRONT_LEFT_MOTOR_PIN_1;
-    int FRONT_LEFT_MOTOR_PIN_2;
-
-    int motorSpeed = 128;
+    int motorSpeed = 16;
 
     void controlMotor(MotorDirection direction);
 
 public:
-    MotorController(
-        int frontRight1, int frontRight2,
-        int rearRight1, int rearRight2,
-        int frontLeft1, int frontLeft2,
-        int rearLeft1, int rearLeft2
-    );
+    MotorController(int rightMotorsPin1, int rightMotorsPin2, int leftMotorsPin1, int leftMotorsPin2);
 
     void setup();
     void goForward();

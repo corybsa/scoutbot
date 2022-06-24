@@ -1,31 +1,21 @@
 #include "motor-controller.h"
 
-const int FRONT_RIGHT_MOTOR_PIN_1 = A2;
-const int FRONT_RIGHT_MOTOR_PIN_2 = A3;
+const int RIGHT_MOTORS_PIN_1 = 3;
+const int RIGHT_MOTORS_PIN_2 = 5;
 
-const int REAR_RIGHT_MOTOR_PIN_1 = A0;
-const int REAR_RIGHT_MOTOR_PIN_2 = A1;
-
-const int FRONT_LEFT_MOTOR_PIN_1 = 6;
-const int FRONT_LEFT_MOTOR_PIN_2 = 9;
-
-const int REAR_LEFT_MOTOR_PIN_1 = 3;
-const int REAR_LEFT_MOTOR_PIN_2 = 5;
+const int LEFT_MOTORS_PIN_1 = 6;
+const int LEFT_MOTORS_PIN_2 = 9;
 
 const int IR_PIN = A4;
-const int TRIGGER_PIN = 12;
-const int ECHO_PIN = 13;
+const int TRIGGER_PIN = 11;
+const int ECHO_PIN = 10;
 
 String command;
 MotorController motorController = MotorController(
-	FRONT_RIGHT_MOTOR_PIN_1,
-  	FRONT_RIGHT_MOTOR_PIN_2,
-    REAR_RIGHT_MOTOR_PIN_1,
-  	REAR_RIGHT_MOTOR_PIN_2,
-    FRONT_LEFT_MOTOR_PIN_1,
-    FRONT_LEFT_MOTOR_PIN_2,
-    REAR_LEFT_MOTOR_PIN_1,
-    REAR_LEFT_MOTOR_PIN_2
+	RIGHT_MOTORS_PIN_1,
+  	RIGHT_MOTORS_PIN_2,
+  	LEFT_MOTORS_PIN_1,
+  	LEFT_MOTORS_PIN_2
 );
 
 void getCommand() {
@@ -66,4 +56,6 @@ void setup() {
 void loop() {
     getCommand();
     parseCommand();
+  
+  	motorController.goForward();
 }
