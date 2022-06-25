@@ -21,16 +21,15 @@ private:
 
     int motorSpeed = 16;
   	bool needToPrintStatus = false;
-    SoftwareSerial *bluetooth = nullptr;
+    SoftwareSerial* bluetooth;
 
     void controlMotor(MotorDirection direction);
-  	void printStatus(String message);
+    void printStatus(String message);
 
 public:
     MotorController(int rightMotorsPin1, int rightMotorsPin2, int leftMotorsPin1, int leftMotorsPin2);
-    ~MotorController();
 
-    void setup(SoftwareSerial *bluetooth);
+    void setup(SoftwareSerial* bt);
     void goForward();
     void turnRight();
     void turnLeft();

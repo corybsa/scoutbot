@@ -7,7 +7,7 @@ const int RIGHT_MOTORS_PIN_2 = 5;
 const int LEFT_MOTORS_PIN_1 = 6;
 const int LEFT_MOTORS_PIN_2 = 9;
 
-const int IR_PIN = 2;
+const int IR_PIN = A4;
 const int TRIGGER_PIN = 12;
 const int ECHO_PIN = 13;
 
@@ -28,6 +28,7 @@ void getCommand() {
     // check if data is available
     if(bluetooth.available() > 0) {
         command = bluetooth.readString();
+        command.trim();
       	motorController.setPrintFlag();
     }
 }
@@ -45,7 +46,7 @@ void parseCommand() {
         motorController.stop();
     } else {
         if(command != "") {
-            bluetooth.println("unknown command");
+            bluetooth.println("[ScoutBot] unknown command: " + command);
             command = "";
         }
     }
@@ -57,6 +58,7 @@ void setup() {
   
     motorController.setup(&bluetooth);
     
+    Serial.begin(9600);
     bluetooth.begin(9600);
 }
 
