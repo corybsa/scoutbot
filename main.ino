@@ -65,5 +65,7 @@ void loop() {
     getCommand();
     parseCommand();
 
-    Serial.println(bluetooth.readString());
+    if(bluetooth.available() > 0) {
+        Serial.println(bluetooth.readString());
+    }
 }
