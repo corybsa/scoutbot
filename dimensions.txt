@@ -5,11 +5,11 @@ motor height: 23mm
 motor width: 19mm
 motor hole: 3mm
 
-motor controller: 43x43mm
-
 distance between front wheels: 28mm
 wheel+tire diameter: 68mm
 wheel+tire width: 26mm
+wheel axel: 11mm
+back axel -> front axel: 127mm
 
 battery length: 69mm
 battery width: 37mm
