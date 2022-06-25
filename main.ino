@@ -1,4 +1,5 @@
 #include "motor-controller.h"
+#include <SoftwareSerial.h>
 
 const int RIGHT_MOTORS_PIN_1 = 3;
 const int RIGHT_MOTORS_PIN_2 = 5;
@@ -7,8 +8,13 @@ const int LEFT_MOTORS_PIN_1 = 6;
 const int LEFT_MOTORS_PIN_2 = 9;
 
 const int IR_PIN = A4;
-const int TRIGGER_PIN = 11;
-const int ECHO_PIN = 10;
+const int TRIGGER_PIN = 12;
+const int ECHO_PIN = 13;
+
+const int bluetoothRx = 10;
+const int bluetoothTx = 11;
+
+SoftwareSerial bluetooth(bluetoothRx, bluetoothTx);
 
 String command;
 MotorController motorController = MotorController(
@@ -46,15 +52,18 @@ void parseCommand() {
 }
 
 void setup() {
-  	pinMode(TRIGGER_PIN, OUTPUT);
-  	pinMode(ECHO_PIN, INPUT);
+  	// pinMode(TRIGGER_PIN, OUTPUT);
+  	// pinMode(ECHO_PIN, INPUT);
   
-    motorController.setup();
+    // motorController.setup();
     
     Serial.begin(9600);
+    bluetooth.begin(9600);
 }
 
 void loop() {
     getCommand();
     parseCommand();
+
+    Serial.println(bluetooth.readString());
 }
