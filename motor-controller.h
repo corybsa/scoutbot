@@ -2,6 +2,7 @@
 #define MOTOR_CONTROLLER_H
 
 #include <Arduino.h>
+#include <SoftwareSerial.h>
 
 class MotorController {
 private:
@@ -20,14 +21,16 @@ private:
 
     int motorSpeed = 16;
   	bool needToPrintStatus = false;
+    SoftwareSerial *bluetooth = nullptr;
 
     void controlMotor(MotorDirection direction);
   	void printStatus(String message);
 
 public:
     MotorController(int rightMotorsPin1, int rightMotorsPin2, int leftMotorsPin1, int leftMotorsPin2);
+    ~MotorController();
 
-    void setup();
+    void setup(SoftwareSerial *bluetooth);
     void goForward();
     void turnRight();
     void turnLeft();

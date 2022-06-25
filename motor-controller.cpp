@@ -7,7 +7,11 @@ MotorController::MotorController(int rightMotorsPin1, int rightMotorsPin2, int l
     LEFT_MOTORS_PIN_2 = leftMotorsPin2;
 }
 
-void MotorController::setup() {
+MotorController::~MotorController() {
+    bluetooth = nullptr;
+}
+
+void MotorController::setup(SoftwareSerial *bluetooth) {
     pinMode(RIGHT_MOTORS_PIN_1, OUTPUT);
     pinMode(RIGHT_MOTORS_PIN_2, OUTPUT);
     pinMode(LEFT_MOTORS_PIN_1, OUTPUT);
@@ -16,7 +20,7 @@ void MotorController::setup() {
 
 void MotorController::printStatus(String message) {
     if(needToPrintStatus) {
-		Serial.println("[ScoutBot] " + message);
+		bluetooth->println("[ScoutBot] " + message);
       	needToPrintStatus = false;
     }
 }

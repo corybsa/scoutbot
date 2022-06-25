@@ -7,7 +7,7 @@ const int RIGHT_MOTORS_PIN_2 = 5;
 const int LEFT_MOTORS_PIN_1 = 6;
 const int LEFT_MOTORS_PIN_2 = 9;
 
-const int IR_PIN = A4;
+const int IR_PIN = 2;
 const int TRIGGER_PIN = 12;
 const int ECHO_PIN = 13;
 
@@ -26,8 +26,8 @@ MotorController motorController = MotorController(
 
 void getCommand() {
     // check if data is available
-    if(Serial.available() > 0) {
-        command = Serial.readString();
+    if(bluetooth.available() > 0) {
+        command = bluetooth.readString();
       	motorController.setPrintFlag();
     }
 }
@@ -45,27 +45,22 @@ void parseCommand() {
         motorController.stop();
     } else {
         if(command != "") {
-            Serial.println("unknown command");
+            bluetooth.println("unknown command");
             command = "";
         }
     }
 }
 
 void setup() {
-  	// pinMode(TRIGGER_PIN, OUTPUT);
-  	// pinMode(ECHO_PIN, INPUT);
+  	pinMode(TRIGGER_PIN, OUTPUT);
+  	pinMode(ECHO_PIN, INPUT);
   
-    // motorController.setup();
+    motorController.setup(&bluetooth);
     
-    Serial.begin(9600);
     bluetooth.begin(9600);
 }
 
 void loop() {
     getCommand();
     parseCommand();
-
-    if(bluetooth.available() > 0) {
-        Serial.println(bluetooth.readString());
-    }
 }
