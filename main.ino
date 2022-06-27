@@ -32,33 +32,33 @@ void getCommand() {
     if(bluetooth.available() > 0) {
         command = bluetooth.readString();
         command.trim();
+        command.toLowerCase();
         motorController.setPrintFlag();
     }
 }
 
 void parseCommand() {
     if(command == "go" || command == "forward") {
-        if(distance > 3) {
-            motorController.setPrintFlag();
+        if(distance > 5) {
             motorController.goForward();
         } else {
-            bluetooth.println("[ScoutBot] object less than 3 inches in front, stopping...");
+            bluetooth.println("[ScoutBot] object less than 5 inches in front, stopping...");
             motorController.setPrintFlag();
             motorController.stop();
             command = "";
         }
-    } else if(command == "right") {
-        motorController.turnRight();
-    } else if(command == "left") {
-        motorController.turnLeft();
     } else if(command == "back" || command == "reverse") {
         motorController.goBakward();
     } else if(command == "stop" || command == "halt") {
         motorController.stop();
+    } else if(command == "left") {
+        motorController.turnLeft();
+    } else if(command == "right") {
+        motorController.turnRight();
     } else if(command == "scan") {
         bluetooth.println("[ScoutBot] object is " + (String)distance + " inches in front");
         command = "";
-    } else if(command == "auto") {
+    } else if(command == "auto" || command == "roam") {
         motorController.autoMode(distance);
     } else {
         if(command != "") {
@@ -80,6 +80,17 @@ double getDistance() {
     return time / 148.1;
 }
 
+void printCommands() {
+    bluetooth.println("\n[ScoutBot] Commands:");
+    bluetooth.println("go | forward: move forward");
+    bluetooth.println("back | reverse: move backward");
+    bluetooth.println("stop | halt: stop all motion");
+    bluetooth.println("left: turn left");
+    bluetooth.println("right: turn right");
+    bluetooth.println("scan: scan for objects in front of ScoutBot");
+    bluetooth.println("auto | roam: ScoutBot will enter free roam mode\n");
+}
+
 void setup() {
     pinMode(TRIGGER_PIN, OUTPUT);
     pinMode(ECHO_PIN, INPUT);
@@ -88,6 +99,9 @@ void setup() {
     
     Serial.begin(9600);
     bluetooth.begin(9600);
+
+    printCommands();
+    bluetooth.println("[ScoutBot] System initialized. Waiting for command...");
 }
 
 void loop() {

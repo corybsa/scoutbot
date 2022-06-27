@@ -79,26 +79,31 @@ void MotorController::controlMotor(MotorDirection direction) {
 }
 
 void MotorController::goForward() {
+    isInAutoMode = false;
     controlMotor(MotorDirection::Forward);
     printStatus("Moving forward");
 }
 
 void MotorController::turnRight() {
+    isInAutoMode = false;
     controlMotor(MotorDirection::Right);
     printStatus("Turning right");
 }
 
 void MotorController::turnLeft() {
+    isInAutoMode = false;
     controlMotor(MotorDirection::Left);
     printStatus("Turning left");
 }
 
 void MotorController::goBakward() {
+    isInAutoMode = false;
     controlMotor(MotorDirection::Backward);
     printStatus("Moving backward");
 }
 
 void MotorController::stop() {
+    isInAutoMode = false;
     controlMotor(MotorDirection::Stop);
     printStatus("Stopped");
 }
@@ -107,9 +112,33 @@ void MotorController::autoMode(double distance) {
     // turn right until there are no obstacles detected within 5 inches
     if(distance < 5) {
         controlMotor(MotorDirection::Right);
+
+        // only print this message if the state is changing
+        // from going forward to turning
+        if(!isAutoTurning) {
+            setPrintFlag();
+            printStatus("obstacle detected, turning right...");
+        }
+
+        isAutoTurning = true;
     } else {
         controlMotor(MotorDirection::Forward);
+
+        // only print this message if the state is changing
+        // from turning to going forward
+        if(isAutoTurning) {
+            setPrintFlag();
+            printStatus("path is clear, moving forward");
+        }
+        
+        isAutoTurning = false;
     }
 
-    printStatus("Entered auto mode");
+    // only print this when auto mode is activated
+    if(!isInAutoMode) {
+        setPrintFlag();
+        printStatus("Entered auto mode");
+        isInAutoMode = true;
+    }
+    
 }

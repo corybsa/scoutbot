@@ -21,6 +21,8 @@ private:
 
     int motorSpeed = 16;
     bool needToPrintStatus = false;
+    bool isInAutoMode = false;
+    bool isAutoTurning = false;
     SoftwareSerial* bluetooth;
 
     void controlMotor(MotorDirection direction);
