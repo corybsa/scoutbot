@@ -20,7 +20,7 @@ private:
     int LEFT_MOTORS_PIN_2;
 
     int motorSpeed = 16;
-  	bool needToPrintStatus = false;
+    bool needToPrintStatus = false;
     SoftwareSerial* bluetooth;
 
     void controlMotor(MotorDirection direction);
@@ -30,12 +30,13 @@ public:
     MotorController(int rightMotorsPin1, int rightMotorsPin2, int leftMotorsPin1, int leftMotorsPin2);
 
     void setup(SoftwareSerial* bt);
+    void setPrintFlag();
     void goForward();
     void turnRight();
     void turnLeft();
     void goBakward();
     void stop();
-  	void setPrintFlag();
+    void autoMode(double distance);
 };
 
 #endif

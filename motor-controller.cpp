@@ -18,7 +18,7 @@ void MotorController::setup(SoftwareSerial* bt) {
 
 void MotorController::printStatus(String message) {
     if(needToPrintStatus) {
-      	needToPrintStatus = false;
+        needToPrintStatus = false;
         bluetooth->println("[ScoutBot] " + message);
     }
 }
@@ -80,25 +80,36 @@ void MotorController::controlMotor(MotorDirection direction) {
 
 void MotorController::goForward() {
     controlMotor(MotorDirection::Forward);
-  	printStatus("Moving forward");
+    printStatus("Moving forward");
 }
 
 void MotorController::turnRight() {
     controlMotor(MotorDirection::Right);
-  	printStatus("Turning right");
+    printStatus("Turning right");
 }
 
 void MotorController::turnLeft() {
     controlMotor(MotorDirection::Left);
-  	printStatus("Turning left");
+    printStatus("Turning left");
 }
 
 void MotorController::goBakward() {
     controlMotor(MotorDirection::Backward);
-  	printStatus("Moving backward");
+    printStatus("Moving backward");
 }
 
 void MotorController::stop() {
     controlMotor(MotorDirection::Stop);
-  	printStatus("Stopped");
+    printStatus("Stopped");
+}
+
+void MotorController::autoMode(double distance) {
+    // turn right until there are no obstacles detected within 5 inches
+    if(distance < 5) {
+        controlMotor(MotorDirection::Right);
+    } else {
+        controlMotor(MotorDirection::Forward);
+    }
+
+    printStatus("Entered auto mode");
 }

@@ -21,10 +21,10 @@ SoftwareSerial bluetooth(bluetoothRx, bluetoothTx);
 
 String command;
 MotorController motorController = MotorController(
-	RIGHT_MOTORS_PIN_1,
-  	RIGHT_MOTORS_PIN_2,
-  	LEFT_MOTORS_PIN_1,
-  	LEFT_MOTORS_PIN_2
+    RIGHT_MOTORS_PIN_1,
+    RIGHT_MOTORS_PIN_2,
+    LEFT_MOTORS_PIN_1,
+    LEFT_MOTORS_PIN_2
 );
 
 void getCommand() {
@@ -32,13 +32,14 @@ void getCommand() {
     if(bluetooth.available() > 0) {
         command = bluetooth.readString();
         command.trim();
-      	motorController.setPrintFlag();
+        motorController.setPrintFlag();
     }
 }
 
 void parseCommand() {
     if(command == "go" || command == "forward") {
         if(distance > 3) {
+            motorController.setPrintFlag();
             motorController.goForward();
         } else {
             bluetooth.println("[ScoutBot] object less than 3 inches in front, stopping...");
@@ -57,6 +58,8 @@ void parseCommand() {
     } else if(command == "scan") {
         bluetooth.println("[ScoutBot] object is " + (String)distance + " inches in front");
         command = "";
+    } else if(command == "auto") {
+        motorController.autoMode(distance);
     } else {
         if(command != "") {
             bluetooth.println("[ScoutBot] unknown command: " + command);
@@ -78,8 +81,8 @@ double getDistance() {
 }
 
 void setup() {
-  	pinMode(TRIGGER_PIN, OUTPUT);
-  	pinMode(ECHO_PIN, INPUT);
+    pinMode(TRIGGER_PIN, OUTPUT);
+    pinMode(ECHO_PIN, INPUT);
   
     motorController.setup(&bluetooth);
     
