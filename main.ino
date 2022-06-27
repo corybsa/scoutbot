@@ -8,11 +8,14 @@ const int LEFT_MOTORS_PIN_1 = 6;
 const int LEFT_MOTORS_PIN_2 = 9;
 
 const int IR_PIN = A4;
-const int TRIGGER_PIN = 12;
-const int ECHO_PIN = 13;
+const int TRIGGER_PIN = 7;
+const int ECHO_PIN = 8;
 
 const int bluetoothRx = 10;
 const int bluetoothTx = 11;
+
+unsigned long time;
+double distance;
 
 SoftwareSerial bluetooth(bluetoothRx, bluetoothTx);
 
@@ -35,7 +38,14 @@ void getCommand() {
 
 void parseCommand() {
     if(command == "go" || command == "forward") {
-        motorController.goForward();
+        if(distance > 3) {
+            motorController.goForward();
+        } else {
+            bluetooth.println("[ScoutBot] object less than 3 inches in front, stopping...");
+            motorController.setPrintFlag();
+            motorController.stop();
+            command = "";
+        }
     } else if(command == "right") {
         motorController.turnRight();
     } else if(command == "left") {
@@ -44,12 +54,27 @@ void parseCommand() {
         motorController.goBakward();
     } else if(command == "stop" || command == "halt") {
         motorController.stop();
+    } else if(command == "scan") {
+        bluetooth.println("[ScoutBot] object is " + (String)distance + " inches in front");
+        command = "";
     } else {
         if(command != "") {
             bluetooth.println("[ScoutBot] unknown command: " + command);
             command = "";
         }
     }
+}
+
+double getDistance() {
+    digitalWrite(TRIGGER_PIN, LOW);
+    delayMicroseconds(5);
+    digitalWrite(TRIGGER_PIN, HIGH);
+    delayMicroseconds(15);
+    digitalWrite(TRIGGER_PIN, LOW);
+    
+    time = pulseIn(ECHO_PIN, HIGH);
+    // distance in inches
+    return time / 148.1;
 }
 
 void setup() {
@@ -65,4 +90,6 @@ void setup() {
 void loop() {
     getCommand();
     parseCommand();
+
+    distance = getDistance();
 }
