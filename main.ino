@@ -7,7 +7,6 @@ const int RIGHT_MOTORS_PIN_2 = 5;
 const int LEFT_MOTORS_PIN_1 = 6;
 const int LEFT_MOTORS_PIN_2 = 9;
 
-const int IR_PIN = A4;
 const int TRIGGER_PIN = 7;
 const int ECHO_PIN = 8;
 
@@ -109,4 +108,6 @@ void loop() {
     parseCommand();
 
     distance = getDistance();
+
+    // TODO: implement code for MLX90614
 }
