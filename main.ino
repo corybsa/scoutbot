@@ -1,5 +1,8 @@
-#include "motor-controller.h"
 #include <SoftwareSerial.h>
+#include <Wire.h>
+#include <Adafruit_MLX90614.h>
+
+#include "motor-controller.h"
 
 const int RIGHT_MOTORS_PIN_1 = 3;
 const int RIGHT_MOTORS_PIN_2 = 5;
@@ -15,8 +18,12 @@ const int bluetoothTx = 11;
 
 unsigned long time;
 double distance;
+double objectTemp;
+double ambientTemp;
 
 SoftwareSerial bluetooth(bluetoothRx, bluetoothTx);
+
+Adafruit_MLX90614 mlx;
 
 String command;
 MotorController motorController = MotorController(
@@ -55,7 +62,7 @@ void parseCommand() {
     } else if(command == "right") {
         motorController.turnRight();
     } else if(command == "scan") {
-        bluetooth.println("[ScoutBot] object is " + (String)distance + " inches in front");
+        scan();
         command = "";
     } else if(command == "auto" || command == "roam") {
         motorController.autoMode(distance);
@@ -79,6 +86,19 @@ double getDistance() {
     return time / 148.1;
 }
 
+void scan() {
+    objectTemp = mlx.readObjectTempF();
+    ambientTemp = mlx.readAmbientTempF();
+
+    bluetooth.println("[ScoutBot] ambient temperature is " + (String)ambientTemp + "F");
+    bluetooth.println("[ScoutBot] object is " + (String)distance + " inches in front");
+
+    if(objectTemp > 90 && objectTemp < 100) {
+        bluetooth.println("[ScoutBot] object is " + (String)objectTemp + "F");
+        bluetooth.println("[ScoutBot] object is possibly human");
+    }
+}
+
 void printCommands() {
     bluetooth.println("\n[ScoutBot] Commands:");
     bluetooth.println("go | forward: move forward");
@@ -98,6 +118,7 @@ void setup() {
     
     Serial.begin(9600);
     bluetooth.begin(9600);
+    mlx.begin();
 
     printCommands();
     bluetooth.println("[ScoutBot] System initialized. Waiting for command...");
@@ -108,6 +129,4 @@ void loop() {
     parseCommand();
 
     distance = getDistance();
-
-    // TODO: implement code for MLX90614
 }

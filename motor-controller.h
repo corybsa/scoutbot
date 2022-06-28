@@ -1,5 +1,5 @@
-#ifndef MOTOR_CONTROLLER_H
-#define MOTOR_CONTROLLER_H
+#ifndef SCOUTBOT_MOTOR_CONTROLLER_H
+#define SCOUTBOT_MOTOR_CONTROLLER_H
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
