@@ -19,7 +19,7 @@ private:
     int LEFT_MOTORS_PIN_1;
     int LEFT_MOTORS_PIN_2;
 
-    int motorSpeed = 16;
+    int motorSpeed = 128;
     bool needToPrintStatus = false;
     bool isInAutoMode = false;
     bool isAutoTurning = false;

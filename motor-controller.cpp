@@ -49,17 +49,17 @@ void MotorController::controlMotor(MotorDirection direction) {
 
             break;
         case MotorDirection::Left:
-            rightMotorsPin1 = motorSpeed;
-            rightMotorsPin2 = LOW;
-            leftMotorsPin1 = LOW;
-            leftMotorsPin2 = motorSpeed;
-
-            break;
-        case MotorDirection::Right:
             rightMotorsPin1 = LOW;
             rightMotorsPin2 = motorSpeed;
             leftMotorsPin1 = motorSpeed;
             leftMotorsPin2 = LOW;
+
+            break;
+        case MotorDirection::Right:
+            rightMotorsPin1 = motorSpeed;
+            rightMotorsPin2 = LOW;
+            leftMotorsPin1 = LOW;
+            leftMotorsPin2 = motorSpeed;
 
             break;
         case MotorDirection::Stop:
