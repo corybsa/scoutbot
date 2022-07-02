@@ -141,5 +141,4 @@ void MotorController::autoMode(double distance) {
         printStatus("Entered auto mode");
         isInAutoMode = true;
     }
-    
 }
