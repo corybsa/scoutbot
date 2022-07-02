@@ -121,6 +121,7 @@ void MotorController::autoMode(double distance) {
         }
 
         isAutoTurning = true;
+        delay(250);
     } else {
         controlMotor(MotorDirection::Forward);
 
